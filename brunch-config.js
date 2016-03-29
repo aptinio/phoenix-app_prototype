@@ -52,6 +52,16 @@ exports.config = {
     babel: {
       // Do not use ES6 compiler in vendor code
       ignore: [/web\/static\/vendor/]
+    },
+    sass: {
+      options: {
+        includePaths: ["node_modules/foundation-sites/scss"]
+      }
+    },
+    postcss: {
+      processors: [
+        require("autoprefixer")()
+      ]
     }
   },
 
@@ -65,6 +75,6 @@ exports.config = {
     enabled: true,
     // Whitelist the npm deps to be pulled in as front-end assets.
     // All other deps in package.json will be excluded from the bundle.
-    whitelist: ["phoenix", "phoenix_html"]
+    whitelist: ["phoenix", "phoenix_html", "foundation-sites"]
   }
 };
