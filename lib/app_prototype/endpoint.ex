@@ -35,5 +35,9 @@ defmodule AppPrototype.Endpoint do
     key: "_app_prototype_key",
     signing_salt: "dYJ2QCu4"
 
+  if Application.get_env(:app_prototype, :sql_sandbox) do
+    plug Phoenix.Ecto.SQL.Sandbox
+  end
+
   plug AppPrototype.Router
 end

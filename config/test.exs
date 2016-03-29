@@ -17,3 +17,5 @@ config :app_prototype, AppPrototype.Repo,
   database: "app_prototype_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :app_prototype, sql_sandbox: true
