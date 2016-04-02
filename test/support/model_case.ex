@@ -49,4 +49,17 @@ defmodule AppPrototype.ModelCase do
   def errors_on(model, data) do
     model.__struct__.changeset(model, data).errors
   end
+
+  def assert_errors_on(model, field, error_values) do
+    Enum.each(error_values, fn({error, values}) ->
+      Enum.each(values, fn(value) ->
+        {:error, changeset} =
+          model
+          |> model.__struct__.changeset(%{field => value})
+          |> AppPrototype.Repo.insert
+        message = "Expected error \"#{field} #{error}\" when it is #{inspect value}"
+        assert {field, error} in changeset.errors, message
+      end)
+    end)
+  end
 end
