@@ -52,6 +52,7 @@ defmodule AppPrototype.Web do
       import AppPrototype.Router.Helpers
       import AppPrototype.ErrorHelpers
       import AppPrototype.Gettext
+      import AppPrototype.FormHelpers
     end
   end
 
