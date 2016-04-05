@@ -7,6 +7,7 @@ defmodule AppPrototype.Email do
     field :address, :string
     field :is_primary, :boolean, default: false
     field :confirmed_at, Ecto.DateTime
+    belongs_to :person, AppPrototype.Person
 
     timestamps
   end
