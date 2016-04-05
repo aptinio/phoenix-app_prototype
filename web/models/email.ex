@@ -23,7 +23,7 @@ defmodule AppPrototype.Email do
     model
     |> cast(params, @allowed_fields)
     |> validate_required(:address)
-    |> validate_format(:address, ~r/^[A-Z0-9][A-Z0-9._%+-]{0,63}@(?:(?=[A-Z0-9-]{1,63}\.)[A-Z0-9]+(?:-[A-Z0-9]+)*\.){1,8}[A-Z]{2,63}$/i)
+    |> validate_format(:address, ~r/\A\s*\z|^[A-Z0-9][A-Z0-9._%+-]{0,63}@(?:(?=[A-Z0-9-]{1,63}\.)[A-Z0-9]+(?:-[A-Z0-9]+)*\.){1,8}[A-Z]{2,63}$/i)
     |> unique_constraint(:address)
   end
 end
