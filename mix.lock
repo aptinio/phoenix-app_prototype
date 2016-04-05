@@ -25,4 +25,6 @@
   "postgrex": {:hex, :postgrex, "0.11.1"},
   "ranch": {:hex, :ranch, "1.2.1"},
   "slime": {:hex, :slime, "0.11.0"},
-  "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.0"}}
+  "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.0"},
+  "ueberauth": {:hex, :ueberauth, "0.2.0"},
+  "ueberauth_identity": {:hex, :ueberauth_identity, "0.2.3"}}

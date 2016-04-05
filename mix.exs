@@ -19,7 +19,7 @@ defmodule AppPrototype.Mixfile do
   def application do
     [mod: {AppPrototype, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :comeonin]]
+                    :phoenix_ecto, :postgrex, :comeonin, :ueberauth_identity]]
   end
 
   # Specifies which paths to compile per environment.
@@ -39,7 +39,8 @@ defmodule AppPrototype.Mixfile do
      {:cowboy, "~> 1.0"},
      {:phoenix_slime, "~> 0.5.1"},
      {:hound, "~> 0.8"},
-     {:comeonin, "~> 2.3"}]
+     {:comeonin, "~> 2.3"},
+     {:ueberauth_identity, "~> 0.2"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

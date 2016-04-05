@@ -19,6 +19,13 @@ defmodule AppPrototype.Router do
     get "/", PageController, :index
 
     post "/get_started", SignupController, :get_started
+
+  scope "/auth", AppPrototype do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    post "/identity/callback", AuthController, :identity_callback
   end
 
   # Other scopes may use custom stacks.

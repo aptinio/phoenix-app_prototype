@@ -33,3 +33,10 @@ config :phoenix, :template_engines,
   slime: PhoenixSlime.Engine
 
 config :hound, driver: "chrome_driver"
+
+config :ueberauth, Ueberauth,
+  providers: [
+    identity: {Ueberauth.Strategy.Identity, [
+      callback_methods: ["POST"]
+    ]}
+  ]
