@@ -19,3 +19,5 @@ config :app_prototype, AppPrototype.Repo,
   pool: Ecto.Adapters.SQL.Sandbox
 
 config :app_prototype, sql_sandbox: true
+
+config :comeonin, :bcrypt_log_rounds, 4
