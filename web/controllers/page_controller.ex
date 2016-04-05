@@ -1,7 +1,9 @@
 defmodule AppPrototype.PageController do
   use AppPrototype.Web, :controller
+  alias AppPrototype.Email
 
   def index(conn, _params) do
-    render conn, "index.html"
+    changeset = Email.changeset(%Email{})
+    render conn, "index.html", changeset: changeset
   end
 end
