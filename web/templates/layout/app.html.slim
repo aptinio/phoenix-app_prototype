@@ -9,8 +9,9 @@ html lang="en"
     link rel="stylesheet" href="#{static_path(@conn, "/css/app.css")}"
 
   body
-    main role="main"
-      = render AppPrototype.SharedView, "flash.html", assigns
-      = render @view_module, @view_template, assigns
+    div.row.column
+      main role="main"
+        = render AppPrototype.SharedView, "flash.html", assigns
+        = render @view_module, @view_template, assigns
 
     script src="#{static_path(@conn, "/js/app.js")}"
