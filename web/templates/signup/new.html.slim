@@ -1,0 +1,13 @@
+= form_for @changeset, signup_path(@conn, :create), fn f ->
+  h3 Complete your registration
+  = inputs_for f, :people, fn p ->
+    = inputs_for p, :access, fn a ->
+      = hidden_input :email, :id, value: @email.id
+      label
+        | Email
+        = text_input :email, :address, disabled: true, value: @email.address
+      = input(f, :name, label: "Organization")
+      = input(p, :first_name)
+      = input(p, :last_name)
+      = input(a, :password)
+  = submit "Register"

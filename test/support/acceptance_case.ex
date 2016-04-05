@@ -7,7 +7,7 @@ defmodule AppPrototype.AcceptanceCase do
       use Hound.Helpers
 
       import Ecto.Model
-      import Ecto.Query, only: [from: 2]
+      import Ecto.Query, only: [from: 2, last: 2]
       import AppPrototype.Router.Helpers
       import AppPrototype.AcceptanceCase
 

@@ -19,6 +19,9 @@ defmodule AppPrototype.Router do
     get "/", PageController, :index
 
     post "/get_started", SignupController, :get_started
+    get "/sign_up/:email_id", SignupController, :new
+    post "/signups", SignupController, :create
+  end
 
   scope "/auth", AppPrototype do
     pipe_through :browser

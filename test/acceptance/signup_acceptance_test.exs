@@ -1,5 +1,6 @@
 defmodule AppPrototype.SignupAcceptanceTest do
   use AppPrototype.AcceptanceCase
+  alias AppPrototype.{Email}
 
   defmodule GetStartedForm do
     def submit(email: email) do
@@ -17,6 +18,41 @@ defmodule AppPrototype.SignupAcceptanceTest do
     end
   end
 
+  defmodule SignupForm do
+    def submit(first_name: first_name,
+               last_name: last_name,
+               org: org,
+               password: password) do
+
+      form = form()
+      fill_field(first_name_input(form), first_name)
+      fill_field(last_name_input(form), last_name)
+      fill_field(org_input(form), org)
+      fill_field(password_input(form), password)
+      submit_element(form)
+    end
+
+    def first_name_input(form) do
+      find_within_element(form, :id, "org_people_0_first_name")
+    end
+
+    def last_name_input(form) do
+      find_within_element(form, :id, "org_people_0_last_name")
+    end
+
+    def org_input(form) do
+      find_within_element(form, :id, "org_name")
+    end
+
+    def password_input(form) do
+      find_within_element(form, :id, "org_people_0_access_password")
+    end
+
+    defp form do
+      find_element(:css, "[method='post'][action='/signups']")
+    end
+  end
+
   test "sign up process" do
     navigate_to "/"
 
@@ -26,5 +62,26 @@ defmodule AppPrototype.SignupAcceptanceTest do
     GetStartedForm.submit(email: "foo@bar.baz")
     assert String.contains?(visible_page_text, "Thanks")
     assert String.contains?(visible_page_text, "We sent you an email at foo@bar.baz")
+
+    email = Email |> last(:inserted_at) |> Repo.one
+    assert "foo@bar.baz" == email.address
+
+    navigate_to "/sign_up/#{email.id}"
+
+    SignupForm.submit(first_name: "",
+                      last_name: "",
+                      org: "",
+                      password: "")
+
+    assert String.contains?(visible_page_text, "Organization\ncan't be blank")
+    assert String.contains?(visible_page_text, "First name\ncan't be blank")
+    assert String.contains?(visible_page_text, "Password\ncan't be blank")
+
+    SignupForm.submit(first_name: "Foo",
+                      last_name: "Bar",
+                      org: "Bar Corp.",
+                      password: "foobarbaz")
+
+    assert String.contains?(visible_page_text, "Registration successfully completed.")
   end
 end
