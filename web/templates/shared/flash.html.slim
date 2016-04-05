@@ -1,0 +1,5 @@
+= if info = get_flash(@conn, :info) do
+  div.callout.primary = info
+
+= if error = get_flash(@conn, :error) do
+  div.callout.alert = error
