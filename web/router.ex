@@ -9,12 +9,17 @@ defmodule AppPrototype.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :browser_auth do
+    plug Guardian.Plug.VerifySession
+    plug Guardian.Plug.LoadResource
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/", AppPrototype do
-    pipe_through :browser # Use the default browser stack
+    pipe_through [:browser, :browser_auth]
 
     get "/", PageController, :index
 
@@ -24,7 +29,8 @@ defmodule AppPrototype.Router do
   end
 
   scope "/auth", AppPrototype do
-    pipe_through :browser
+    pipe_through [:browser, :browser_auth]
+
 
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback

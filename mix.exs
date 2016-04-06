@@ -40,7 +40,8 @@ defmodule AppPrototype.Mixfile do
      {:phoenix_slime, "~> 0.5.1"},
      {:hound, "~> 0.8"},
      {:comeonin, "~> 2.3"},
-     {:ueberauth_identity, "~> 0.2"}]
+     {:ueberauth_identity, "~> 0.2"},
+     {:guardian, github: "ueberauth/guardian"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

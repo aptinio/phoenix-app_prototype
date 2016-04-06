@@ -40,3 +40,10 @@ config :ueberauth, Ueberauth,
       callback_methods: ["POST"]
     ]}
   ]
+
+config :guardian, Guardian,
+  issuer: "AppPrototype",
+  ttl: {30, :days},
+  verify_issuer: true,
+  secret_key: "hEx2L+DkIr125xxVRajGJA6rmjE2Tr71NOc0PL5/eyB/ayGr9GKy45R4aGneuh0B",
+  serializer: AppPrototype.GuardianSerializer
