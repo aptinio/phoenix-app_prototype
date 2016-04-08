@@ -11,7 +11,7 @@ html lang="en"
   body
     div.row.column
       main role="main"
-        = render AppPrototype.SharedView, "flash.html", assigns
+        = render "flash.html", assigns
         = render @view_module, @view_template, assigns
 
     script src="#{static_path(@conn, "/js/app.js")}"
