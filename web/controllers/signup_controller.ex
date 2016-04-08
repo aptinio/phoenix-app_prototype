@@ -16,10 +16,22 @@ defmodule AppPrototype.SignupController do
   end
 
   def new(conn, %{"email_id" => email_id}) do
-    email = Repo.get(Email, email_id)
+    email = case Ecto.UUID.cast(email_id) do
+      :error -> nil
+      {:ok, _} -> Repo.get(Email, email_id)
+    end
 
-    changeset = Org.changeset(%Org{people: [%Person{}]})
-    render(conn, "new.html", changeset: changeset, email: email)
+    case email do
+      nil ->
+        render(conn, AppPrototype.ErrorView, "404.html")
+
+      %{person_id: nil} ->
+        changeset = Org.changeset(%Org{people: [%Person{}]})
+        render(conn, "new.html", changeset: changeset, email: email)
+
+      %{person_id: _} ->
+        redirect(conn, to: auth_path(conn, :request, "identity"))
+    end
   end
 
   def create(conn, %{"org" => org_params, "email" => email_params}) do

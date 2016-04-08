@@ -87,6 +87,14 @@ defmodule AppPrototype.SignupAcceptanceTest do
     email = Email |> last(:inserted_at) |> Repo.one
     assert "foo@bar.baz" == email.address
 
+    navigate_to "/"
+
+    GetStartedForm.submit(email: "foo@bar.baz")
+    assert visible_page_text =~ "has already been taken"
+
+    navigate_to "/sign_up/wrong"
+    assert visible_page_text =~ "not found"
+
     navigate_to "/sign_up/#{email.id}"
 
     SignupForm.submit(first_name: "",
@@ -105,6 +113,8 @@ defmodule AppPrototype.SignupAcceptanceTest do
 
     LoginForm.log_in(email: "foo@bar.baz", password: "wrong")
     assert visible_page_text =~ "Incorrect email or password."
+
+    navigate_to "/sign_up/#{email.id}"
 
     LoginForm.log_in(email: "wrong@bar.baz", password: "foobarbaz")
     assert visible_page_text =~ "Incorrect email or password."
