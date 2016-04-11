@@ -25,7 +25,7 @@ defmodule AppPrototype.SignupController do
 
     case email do
       nil ->
-        render(conn, AppPrototype.ErrorView, "404.html")
+        raise Phoenix.Router.NoRouteError, conn: conn, router: Router
 
       %{person_id: nil} ->
         changeset = Org.changeset(%Org{people: [%Person{}]})
