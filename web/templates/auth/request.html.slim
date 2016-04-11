@@ -1,7 +1,7 @@
-= form_tag auth_path(@conn, :callback, "identity") do
+= form_tag auth_path(@conn, :callback, "identity"), class: "absolutely-centered" do
   h3
     | Log in to&nbsp;
     = link "AppPrototype", to: page_path(@conn, :index)
   = tag :input, type: "email", name: "email", placeholder: "Email", value: @conn.params["email"]
   = tag :input, type: "password", name: "password", placeholder: "Password"
-  = submit "Log in"
+  = submit "Log in", class: "button"

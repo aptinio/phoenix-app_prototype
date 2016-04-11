@@ -2,3 +2,8 @@
 @import "foundation";
 
 @include foundation-everything;
+
+.absolutely-centered {
+  @include absolute-center;
+  padding-bottom: 2rem;
+}

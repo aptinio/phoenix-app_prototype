@@ -1,6 +1,5 @@
-h1 Welcome to AppPrototype!
-
-= form_for @changeset, signup_path(@conn, :get_started), fn f ->
+= form_for @changeset, signup_path(@conn, :get_started), [class: "absolutely-centered small-6"], fn f ->
+  h1 Welcome to AppPrototype!
   = error_alert(@changeset)
   = input(f, :address, as: :email_input, label: "Enter your email", placeholder: "Enter your email")
   = submit("Get started!", class: "button")
