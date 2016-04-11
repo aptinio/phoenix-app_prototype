@@ -13,8 +13,8 @@ defmodule AppPrototype.SignupAcceptanceTest do
       find_within_element(form, :id, "email_address")
     end
 
-    defp form do
-      find_element(:css, "[method='post'][action='/get_started']")
+    def form do
+      find_element(:css, "[method='post'][action='/signups/get_started']")
     end
   end
 
@@ -74,8 +74,24 @@ defmodule AppPrototype.SignupAcceptanceTest do
     end
   end
 
+  def log_out do
+    find_element(:css, "[value='Log out']")
+    |> submit_element
+  end
+
+  def log_in_link_present? do
+    element?(:link_text, "Log in")
+  end
+
+  def log_out_button_present? do
+    element?(:css, "[value='Log out']")
+  end
+
   test "sign up process" do
     navigate_to "/"
+
+    assert log_in_link_present?
+    refute log_out_button_present?
 
     GetStartedForm.submit(email: "")
     assert visible_page_text =~ "can't be blank"
@@ -83,6 +99,9 @@ defmodule AppPrototype.SignupAcceptanceTest do
     GetStartedForm.submit(email: "foo@bar.baz")
     assert visible_page_text =~ "Thanks"
     assert visible_page_text =~ "We sent you an email at foo@bar.baz"
+
+    refute log_in_link_present?
+    refute log_out_button_present?
 
     email = Email |> last(:inserted_at) |> Repo.one
     assert "foo@bar.baz" == email.address
@@ -92,10 +111,14 @@ defmodule AppPrototype.SignupAcceptanceTest do
     GetStartedForm.submit(email: "foo@bar.baz")
     assert visible_page_text =~ "has already been taken"
 
-    navigate_to "/sign_up/wrong"
-    assert visible_page_text =~ "not found"
+    navigate_to "/signups/wrong"
+    assert visible_page_text =~ "Page not found"
+    refute log_out_button_present?
 
-    navigate_to "/sign_up/#{email.id}"
+    navigate_to "/signups/#{email.id}"
+
+    refute log_in_link_present?
+    refute log_out_button_present?
 
     SignupForm.submit(first_name: "",
                       last_name: "",
@@ -111,15 +134,42 @@ defmodule AppPrototype.SignupAcceptanceTest do
                       password: "foobarbaz")
     assert visible_page_text =~ "Registration successfully completed."
 
+    refute log_in_link_present?
+    refute log_out_button_present?
+
     LoginForm.log_in(email: "foo@bar.baz", password: "wrong")
     assert visible_page_text =~ "Incorrect email or password."
 
-    navigate_to "/sign_up/#{email.id}"
+    refute log_in_link_present?
+    refute log_out_button_present?
+
+    navigate_to "/signups/#{email.id}"
 
     LoginForm.log_in(email: "wrong@bar.baz", password: "foobarbaz")
     assert visible_page_text =~ "Incorrect email or password."
 
     LoginForm.log_in(email: "foo@bar.baz", password: "foobarbaz")
     assert visible_page_text =~ "Logged in as Foo."
+
+    refute log_in_link_present?
+    assert log_out_button_present?
+
+    navigate_to "/dashboard"
+
+    refute log_in_link_present?
+    assert log_out_button_present?
+
+    log_out
+
+    assert log_in_link_present?
+    refute log_out_button_present?
+
+    navigate_to "/dashboard"
+
+    refute log_in_link_present?
+    refute log_out_button_present?
+
+    assert visible_page_text =~ "Authentication required"
+    LoginForm.log_in(email: "foo@bar.baz", password: "foobarbaz")
   end
 end

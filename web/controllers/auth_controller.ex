@@ -16,12 +16,18 @@ defmodule AppPrototype.AuthController do
         conn
         |> put_flash(:info, "Logged in as #{person.first_name}.")
         |> Guardian.Plug.sign_in(person)
-        |> redirect(to: page_path(conn, :index))
+        |> redirect(to: dashboard_path(conn, :index))
       {:error, reason} ->
         conn
         |> put_flash(:error, reason)
         |> render("request.html", callback_url: Ueberauth.Strategy.Helpers.callback_url(conn))
     end
+  end
+
+  def delete(conn, _params) do
+    conn
+    |> Guardian.Plug.sign_out
+    |> redirect(to: page_path(conn, :index))
   end
 
   defp person_from_identity_auth(auth) do

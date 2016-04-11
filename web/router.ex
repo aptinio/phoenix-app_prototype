@@ -14,31 +14,27 @@ defmodule AppPrototype.Router do
     plug Guardian.Plug.LoadResource
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
+  scope "/signups", AppPrototype do
+    pipe_through [:browser, :browser_auth]
+
+    post "/get_started", SignupController, :get_started
+    get "/:email_id", SignupController, :new
+    post "/", SignupController, :create
+  end
+
+  scope "/auth", AppPrototype do
+    pipe_through [:browser, :browser_auth]
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    post "/identity/callback", AuthController, :identity_callback
+    delete "/", AuthController, :delete
   end
 
   scope "/", AppPrototype do
     pipe_through [:browser, :browser_auth]
 
     get "/", PageController, :index
-
-    post "/get_started", SignupController, :get_started
-    get "/sign_up/:email_id", SignupController, :new
-    post "/signups", SignupController, :create
+    get "/dashboard", DashboardController, :index
   end
-
-  scope "/auth", AppPrototype do
-    pipe_through [:browser, :browser_auth]
-
-
-    get "/:provider", AuthController, :request
-    get "/:provider/callback", AuthController, :callback
-    post "/identity/callback", AuthController, :identity_callback
-  end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", AppPrototype do
-  #   pipe_through :api
-  # end
 end
