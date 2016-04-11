@@ -3,6 +3,7 @@ defmodule AppPrototype.AuthController do
   alias AppPrototype.{Repo,Person}
   import Ecto.Query, only: [from: 2]
   plug Ueberauth
+  plug :put_layout, "bare.html"
 
   def request(conn, _params) do
     conn

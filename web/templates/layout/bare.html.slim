@@ -3,9 +3,6 @@ html lang="en"
   = render "head.html", assigns
   body
     div.row.column
-      = form_tag auth_path(@conn, :delete), method: :delete do
-        = submit("Log out", class: "button secondary")
-
       main role="main"
         = render "flash.html", assigns
         = render @view_module, @view_template, assigns

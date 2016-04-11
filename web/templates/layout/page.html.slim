@@ -1,0 +1,22 @@
+doctype html
+html lang="en"
+  = render "head.html", assigns
+  body
+    div.top-bar
+      div.top-bar-title
+        h4 AppPrototype
+      div
+        div.top-bar-left
+          ul.menu
+            li = link "Blog", to: "#"
+            li = link "Pricing", to: "#"
+            li = link "About", to: "#"
+        div.top-bar-right
+          ul.menu
+            li = link "Log in", to: auth_path(@conn, :request, "identity")
+
+    div.row.column
+      main role="main"
+        = render @view_module, @view_template, assigns
+
+    = render "script.html", assigns

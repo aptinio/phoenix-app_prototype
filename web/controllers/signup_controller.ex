@@ -2,6 +2,8 @@ defmodule AppPrototype.SignupController do
   use AppPrototype.Web, :controller
   alias AppPrototype.{Org,Person,Email}
 
+  plug :put_layout, "bare.html"
+
   def get_started(conn, %{"email" => email_params}) do
     changeset = Email.changeset(%Email{}, email_params)
 
