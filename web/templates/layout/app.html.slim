@@ -3,6 +3,7 @@ html lang="en"
   = render "head.html", assigns
   body
     div.row.column
+      h3 = @user.org.name
       = form_tag auth_path(@conn, :delete), method: :delete do
         = submit("Log out", class: "button secondary")
 

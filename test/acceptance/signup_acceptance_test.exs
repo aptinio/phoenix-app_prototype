@@ -151,6 +151,8 @@ defmodule AppPrototype.SignupAcceptanceTest do
     LoginForm.log_in(email: "foo@bar.baz", password: "foobarbaz")
     assert visible_page_text =~ "Logged in as Foo."
 
+    assert visible_page_text =~ "Bar Corp."
+
     refute log_in_link_present?
     assert log_out_button_present?
 
