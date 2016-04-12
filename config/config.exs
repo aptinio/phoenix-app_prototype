@@ -19,10 +19,6 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
-
 # Configure phoenix generators
 config :phoenix, :generators,
   migration: true,
@@ -47,3 +43,7 @@ config :guardian, Guardian,
   verify_issuer: true,
   secret_key: "hEx2L+DkIr125xxVRajGJA6rmjE2Tr71NOc0PL5/eyB/ayGr9GKy45R4aGneuh0B",
   serializer: AppPrototype.GuardianSerializer
+
+# Import environment specific config. This must remain at the bottom
+# of this file so it overrides the configuration defined above.
+import_config "#{Mix.env}.exs"
