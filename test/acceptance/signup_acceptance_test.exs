@@ -3,7 +3,7 @@ defmodule AppPrototype.SignupAcceptanceTest do
   alias AppPrototype.{Email}
 
   def log_out do
-    find_element(:css, "[value='Log out']")
+    find_element(:link_text, "Log out")
     |> submit_element
   end
 
@@ -12,7 +12,7 @@ defmodule AppPrototype.SignupAcceptanceTest do
   end
 
   def log_out_button_present? do
-    element?(:css, "[value='Log out']")
+    element?(:link_text, "Log out")
   end
 
   test "sign up process" do

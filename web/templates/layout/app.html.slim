@@ -4,8 +4,7 @@ html lang="en"
   body
     div.row.column
       h3 = @user.org.name
-      = form_tag auth_path(@conn, :delete), method: :delete do
-        = submit("Log out", class: "button secondary")
+      = link "Log out", to: auth_path(@conn, :delete), method: :delete, class: "tiny secondary button"
 
       main role="main"
         = render "flash.html", assigns
