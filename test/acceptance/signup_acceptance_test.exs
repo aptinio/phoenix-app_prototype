@@ -1,5 +1,5 @@
 defmodule AppPrototype.SignupAcceptanceTest do
-  use AppPrototype.AcceptanceCase
+  use AppPrototype.AcceptanceCase, async: true
   alias AppPrototype.{Email}
 
   def log_out do
