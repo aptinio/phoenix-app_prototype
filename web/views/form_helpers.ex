@@ -15,9 +15,13 @@ defmodule AppPrototype.FormHelpers do
   defp input_type(form, field, opts) do
     cond do
       opts[:rows] -> :textarea
-      opts[:collection] -> :select
+      opts[:options] -> :select
       true -> Form.input_type(form, field)
     end
+  end
+
+  defp input(:select, form, field, opts) do
+    wrap(form, field, opts, &select(&1, &2, &3))
   end
 
   defp input(input_type, form, field, opts) do
@@ -40,5 +44,10 @@ defmodule AppPrototype.FormHelpers do
         AppPrototype.ErrorHelpers.error_tag(form, field)
       ], &(&1))
     end
+  end
+
+  defp select(form, field, opts) do
+    {options, opts} = Keyword.pop(opts, :options, [])
+    Form.select(form, field, options, opts)
   end
 end
