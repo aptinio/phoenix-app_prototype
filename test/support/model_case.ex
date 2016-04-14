@@ -57,8 +57,13 @@ defmodule AppPrototype.ModelCase do
           model
           |> model.__struct__.changeset(%{field => value})
           |> AppPrototype.Repo.insert
-        message = "Expected error \"#{field} #{error}\" when it is #{inspect value}"
-        assert {field, error} in changeset.errors, message
+
+        errors = Enum.map(changeset.errors, fn {field, error} ->
+          {field, AppPrototype.ErrorHelpers.translate_error(error)}
+        end)
+
+        message = "Expected error \"#{field} #{error}\" when it is #{inspect value}\nErrors: #{inspect errors}"
+        assert {field, error} in errors, message
       end)
     end)
   end
