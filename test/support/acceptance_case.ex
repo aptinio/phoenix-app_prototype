@@ -18,10 +18,16 @@ defmodule AppPrototype.AcceptanceCase do
     end
   end
 
-  setup do
+  setup(tags) do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(AppPrototype.Repo)
-    Hound.start_session
-    navigate_to(Phoenix.Ecto.SQL.Sandbox.path_for(AppPrototype.Repo, self()))
+
+    unless tags[:async] do
+      Ecto.Adapters.SQL.Sandbox.mode(AppPrototype.Repo, {:shared, self()})
+    end
+
+    metadata = Phoenix.Ecto.SQL.Sandbox.metadata_for(AppPrototype.Repo, self())
+    Hound.start_session(metadata: metadata)
+
     :ok
   end
 

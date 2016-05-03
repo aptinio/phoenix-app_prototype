@@ -27,8 +27,13 @@ defmodule AppPrototype.ConnCase do
     end
   end
 
-  setup do
+  setup(tags) do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(AppPrototype.Repo)
+
+    unless tags[:async] do
+      Ecto.Adapters.SQL.Sandbox.mode(AppPrototype.Repo, {:shared, self()})
+    end
+
     {:ok, conn: Phoenix.ConnTest.conn()}
   end
 end

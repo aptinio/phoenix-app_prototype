@@ -44,6 +44,8 @@ config :guardian, Guardian,
   secret_key: "hEx2L+DkIr125xxVRajGJA6rmjE2Tr71NOc0PL5/eyB/ayGr9GKy45R4aGneuh0B",
   serializer: AppPrototype.GuardianSerializer
 
+config :app_prototype, ecto_repos: [AppPrototype.Repo]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

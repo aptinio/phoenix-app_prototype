@@ -32,13 +32,13 @@ defmodule AppPrototype.Mixfile do
   defp deps do
     [{:phoenix, "~> 1.1.4"},
      {:postgrex, ">= 0.0.0"},
-     {:phoenix_ecto, "~> 3.0.0-beta"},
+     {:phoenix_ecto, "~> 3.0.0-rc"},
      {:phoenix_html, "~> 2.4"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
      {:phoenix_slime, "~> 0.5.1"},
-     {:hound, "~> 0.8"},
+     {:hound, "~> 1.0"},
      {:comeonin, "~> 2.3"},
      {:ueberauth_identity, "~> 0.2"},
      {:guardian, github: "ueberauth/guardian"}]
@@ -52,6 +52,7 @@ defmodule AppPrototype.Mixfile do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-     "ecto.reset": ["ecto.drop", "ecto.setup"]]
+     "ecto.reset": ["ecto.drop", "ecto.setup"],
+     "test": ["ecto.create --quiet", "ecto.migrate", "test"]]
   end
 end
